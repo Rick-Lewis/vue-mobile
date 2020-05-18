@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <van-uploader v-model="fileList" multiple accept="image/*,.pdf,.docx,.pptx,.xlsx,.txt" />
+      <van-uploader v-model="fileList" multiple :accept="accept" />
     </div>
     <div>
       <van-button type="default" @click="handleSelectFile">选择文件</van-button>
@@ -34,7 +34,15 @@ export default {
       ]
     }
   },
-  computed: {},
+  computed: {
+      accept(){
+        var u = navigator.userAgent;
+        var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+        var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        var result = isAndroid && !isIOS ? 'file/*' : '';
+        return result;
+      }
+  },
   created() {},
   mounted() {},
   methods: {
